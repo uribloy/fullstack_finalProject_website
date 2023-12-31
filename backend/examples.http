@@ -1,0 +1,161 @@
+@local=http://localhost:3900
+@tokenRegular=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTkwNWI0MzE4MjIzZjg2NDc1YzZjODgiLCJpc0FkbWluIjpmYWxzZSwibmFtZSI6ImR1ZHUiLCJpYXQiOjE3MDM5NTk1ODB9.fmlcrDw3unuzIpYFG9c3Fl0qkKvVSqFI87k53xvq-H4
+@tokenAdmin=
+@regular2=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTkwNWIwYzE4MjIzZjg2NDc1YzZjODQiLCJpc0FkbWluIjpmYWxzZSwibmFtZSI6Im9zaHJlaSIsImlhdCI6MTcwMzk1OTc5N30.aoeV6WwBEbhzxUmzO_OjFnnm2si0W5W7jgk_eS8ropA
+
+### Sign-up user // new user
+POST {{local}}/users
+Content-Type: application/json
+
+{
+    "name":{
+        "first":"david",
+        "last":"levi"},
+        "userName":"dudu",
+    "email": "david@gmail.com",
+    "phone":"021522213",
+    "password":"Aa123456&",
+    "address":{
+       "country":"israel",
+       "city":"jerusalem",
+       "street":"king george",
+       "houseNumber":"17/5"
+    }
+}
+
+### Sign-in user
+POST {{local}}/users/login
+Content-Type: application/json
+
+{
+    "email": "osher@gmail.com",
+    "password": "Aa123456&"
+}
+
+### Get all users
+GET {{local}}/users/
+x-auth-token: {{tokenAdmin}}
+
+### get my cart
+GET {{local}}/users/cart
+x-auth-token:{{regular2}}
+
+### Get user by id
+GET {{local}}/users/65841dfd610fb1929cbbf15f
+Content-Type: application/json
+x-auth-token:{{tokenRegular}}
+
+### Get me
+GET {{local}}/users/my-profile
+Content-Type: application/json
+x-auth-token:{{regular2}}
+
+### Edit user
+PUT  {{local}}/users/65905b4318223f86475c6c88
+Content-Type: application/json
+x-auth-token: {{tokenRegular}}
+
+{
+    "name":{
+        "first": "david",
+        "last":"levi"},
+    "userName":"dudu",
+    "email": "david@gmail.com",
+    "phone":"038884545",
+    "password":"Aa123456&",
+    "address":{
+       "country":"israel",
+       "city":"tel aviv",
+       "street":"yafo",
+       "houseNumber":"112/20"
+    }
+}
+
+### change levelStatus
+PATCH {{local}}/users/65268499e6ed4e9366b512d6
+Content-Type: application/json
+x-auth-token:{{tokenRegular}}
+
+{
+    "isAdmin":true
+}
+
+### delete user
+DELETE {{local}}/users/65905b0c18223f86475c6c84
+x-auth-token:{{regular2}}
+
+### get my favorites
+GET {{local}}/users/my-favorites
+x-auth-token:{{tokenRegular}}
+
+
+### add/sub like
+PATCH {{local}}/users/like/
+Content-Type: application/json
+x-auth-token:{{tokenRegular}}
+
+{
+   "_id":"65841dfd610fb1929cbbf169"
+}
+
+////////////**********//////////////
+
+### get all products
+GET {{local}}/products
+
+### get product by id
+GET {{local}}/products/65268399d2353be368bf7558
+
+### new product
+POST {{local}}/products
+Content-Type: application/json
+x-auth-token: {{tokenRegular}}
+
+{
+    "title":"wishMachine",
+    "description":"testing",
+    "category":"home",
+    "price":500,
+    "stock":5
+}
+
+### edit product
+PUT {{local}}/products/65268399d2353be368bf7558
+Content-Type: application/json
+x-auth-token: {{tokenAdmin}}
+
+{
+   "title":"edit22",
+    "description":"testing",
+     "category":"home",
+    "price":500
+}
+
+### add/sub like
+PATCH {{local}}/products/like/657afc884455f2a203ed9adc
+Content-Type: application/json
+x-auth-token:{{tokenRegular}}
+
+### delete card
+DELETE {{local}}/products/6526b8f2665e2e51571b9e9f
+x-auth-token:{{tokenAdmin}}
+
+/////////*********///////////
+
+### new cart
+PATCH {{local}}/users/cart
+x-auth-token:{{tokenRegular}}
+Content-Type: application/json
+
+{
+    "product_id":"65841dfd610fb1929cbbf171",
+    "quantity":0
+}
+
+### get cart
+GET {{local}}/cart
+x-auth-token:{{tokenRegular}}
+
+### public
+GET {{local}}/test.html
+# 65841dfd610fb1929cbbf16b
